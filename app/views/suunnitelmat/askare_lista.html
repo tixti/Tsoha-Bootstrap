@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Väiskin askareet</h1>
+
+  <p>
+    <a href="#" class="btn btn-primary">Lisää askare</a>
+  </p>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Nimi</th>
+        <th>Deadline</th>
+        <th>Tärkeysaste</th>
+        <th>Luokka</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Tenttiin luku</td>
+        <td>12.12.2015</td>
+        <td><label class="label label-danger">5</label></td>
+        <td>Opiskelu</td>
+        <th><a class="btn btn-default btn-sm" href="#">Muokkaa</a></th>
+      </tr>
+    </tbody>
+  </table>
+  {% endblock %}
