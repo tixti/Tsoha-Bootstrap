@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Muokkaa askaretta Tenttiin luku</h1>
+{% for askare in askare %}
+  <h1>Muokkaa askaretta {{askare.nimi}}</h1>
 
   <form>
     <div class="checkbox">
@@ -11,15 +12,15 @@
     </div>
     <div class="form-group">
       <label>Nimi</label>
-      <input class="form-control" value="Tenttiin luku" type="text">
+      <input class="form-control" value={{askare.nimi}} type="text">
     </div>
     <div class="form-group">
       <label>Deadline</label>
-      <input class="form-control" value="12.12.2015" type="text">
+      <input class="form-control" value={{askare.deadline}} type="text">
     </div>
     <div class="form-group">
       <label>Tärkeysaste</label>
-      <select multiple class="form-control" value="5">
+    <select multiple class="form-control" value={{askare.tarkeysaste}}>
 	    <option>1</option>
 	  	<option>2</option>
 	  	<option>3</option>
@@ -29,10 +30,11 @@
     </div>
     <div class="form-group">
       <label>Luokka</label>
-      <input class="form-control" value="Opiskelu" type="text">
+      <input class="form-control" value="Luokka" type="text">
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-success">Tallenna</button>
     </div>
   </form>
+  {% endfor %}
 {% endblock %}

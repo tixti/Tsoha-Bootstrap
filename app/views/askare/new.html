@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Lisää askare</h1>
+
+  <form method="post" action="tietokantasovellus/askareet">
+    <div class="form-group">
+      <label>Nimi</label>
+      <input name="nimi" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Tärkeysaste</label>
+      <select name="tarkeysaste" multiple class="form-control">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+
+    <div class="form-group">
+      <label>Deadline</label>
+      <input name="deadline" class="form-control" type="text">
+    </div>
+  </form>
+{% endblock %}

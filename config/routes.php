@@ -1,7 +1,7 @@
 <?php
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+    AskareController::index();
   });
 
   $routes->get('/hiekkalaatikko', function() {
@@ -9,13 +9,21 @@
   });
 
   $routes->get('/askareet', function() {
-    HelloWorldController::askare_lista();
-  });
-
-  $routes->get('/askareet/1', function() {
-    HelloWorldController::askare_muokkaa();
+    AskareController::index();
   });
 
   $routes->get('/login', function() {
     HelloWorldController::login();
+  });
+
+  $routes->get('/askareet/new', function(){
+    AskareController::create();
+  });
+
+  $routes->get('/askareet/:id', function($id) {
+    AskareController::show($id);
+  });
+
+  $routes->post('/askareet', function(){
+    AskareController::store();
   });
