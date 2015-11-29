@@ -8,8 +8,9 @@
     }
 
     public static function sandbox(){
-      // Testaa koodiasi täällä
-      View::make('helloworld.html');
+      $askareet = Askare::all();
+
+      Kint::dump($askareet);
     }
 
     public static function askare_lista(){

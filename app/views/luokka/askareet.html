@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1>Luokan {{luokka.nimi}} askareet </h1>
+
+	<table class="table table-striped table-bordered">
+	    <thead>
+	      <tr>
+	        <th>Nimi</th>
+	        <th>Deadline</th>
+	        <th>Tärkeysaste</th>
+	        <th></th>
+	      </tr>
+	    </thead>
+
+	    <tbody>
+	      {% for askare in askareet %}
+	        <tr>
+	          <td>{{askare.nimi}}</td>
+	          <td>{{askare.deadline}}</td>
+	          <td>{{askare.tarkeysaste}}</td>
+	          <th><a class="btn btn-default btn-sm" href="{{base_path}}/askareet/{{askare.atunnus}}">Muokkaa</a></th>
+	        </tr>
+	      {% endfor %}
+	    </tbody>
+  	</table>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if user_logged_in %}
+    <h1>Käyttäjän {{user_logged_in.username}} askareet luokkien mukaan</h1>
+  {% endif %}
+	   <p>
+    	<a href="/tietokantasovellus/luokat/new" class="btn btn-primary">Lisää luokka</a>
+  	</p>
+
+  	<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Nimi</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for luokka in luokat %}
+        <tr>
+          <td>{{luokka.nimi}}</td>
+          <td><a class="btn btn-default btn-sm" href="{{base_path}}/luokat/{{luokka.ltunnus}}">Askareet</a></td>
+          <td><form method="post" action="{{base_path}}/luokat/{{luokka.ltunnus}}/destroy" style="display: inline-block;">
+            <button type="submit" class="btn btn-danger btn-sm">Poista luokka</button>
+          </form></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
+{% endblock %}

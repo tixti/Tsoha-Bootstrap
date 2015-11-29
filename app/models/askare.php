@@ -6,11 +6,12 @@ class Askare extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+        $this->validators = array('validate_nimi', 'validate_tarkeysaste', 'validate_date');
 	}
 
-	public static function all(){
-		$query = DB::connection()->prepare('SELECT * FROM askare');
-		$query->execute();
+	public static function all($id){
+		$query = DB::connection()->prepare('SELECT * FROM Askare WHERE ktunnus = :ktunnus');
+		$query->execute(array('ktunnus' => $id));
 		$rows = $query->fetchAll();
 		$askareet = array();
     	
@@ -19,10 +20,12 @@ class Askare extends BaseModel{
     			'atunnus' => $row['atunnus'],
     			'ktunnus' => $row['ktunnus'],
     			'nimi' => $row['nimi'],
-    			'tarkeysaste' => $row['tarkeysaste'],
+    			'tarkeysaste' => $row['tärkeysaste'],
     			'deadline' => $row['deadline']
     		));	
     	}
+
+        return $askareet;
 	}
 
 	public static function find($atunnus){
@@ -35,7 +38,7 @@ class Askare extends BaseModel{
     			'atunnus' => $row['atunnus'],
     			'ktunnus' => $row['ktunnus'],
     			'nimi' => $row['nimi'],
-    			'tarkeysaste' => $row['tarkeysaste'],
+    			'tarkeysaste' => $row['tärkeysaste'],
     			'deadline' => $row['deadline']
     		));
 
@@ -45,11 +48,30 @@ class Askare extends BaseModel{
     	return null;
 	}
 
-    public function save(){
-    
-    $query = DB::connection()->prepare('INSERT INTO Askare (nimi, tarkeysaste, deadline) VALUES (:nimi, :tarkeysaste, :deadline) RETURNING atunnus');
-    $query->execute(array('nimi' => $this->nimi, 'tarkeysaste' => $this->tarkeysaste, 'deadline' => $this->deadline));
-    $row = $query->fetch();
-    $this->atunnus = $row['atunnus'];
-  }
+    public function save(){  
+        $query = DB::connection()->prepare('INSERT INTO Askare (ktunnus, nimi, tärkeysaste, deadline) VALUES (:ktunnus, :nimi, :tarkeysaste, :deadline) RETURNING atunnus');
+        $query->execute(array('ktunnus' => $this->ktunnus, 'nimi' => $this->nimi, 'tarkeysaste' => $this->tarkeysaste, 'deadline' => $this->deadline));      
+        $row = $query->fetch();
+        $this->atunnus = $row['atunnus'];
+    }
+
+    public function saveAskareenLuokka($luokka) {
+        $query = DB::connection()->prepare('INSERT INTO Askareenluokka (atunnus, ltunnus) VALUES (:atunnus, :ltunnus)');
+        $query->execute(array('atunnus' => $this->atunnus, 'ltunnus' => $luokka));
+    }
+
+    public function update(){
+        $query = DB::connection()->prepare('UPDATE Askare SET nimi = :nimi, tärkeysaste = :tarkeysaste, deadline = :deadline WHERE atunnus = :atunnus');
+        $query->execute(array('nimi' => $this->nimi, 'tarkeysaste' => $this->tarkeysaste, 'deadline' => $this->deadline, 'atunnus' => $this->atunnus));
+    }
+
+    public function destroy(){
+        $query2 = DB::connection()->prepare('DELETE FROM Askareenluokka WHERE atunnus = :atunnus');
+        $query2->execute(array('atunnus' => $this->atunnus));
+        $query = DB::connection()->prepare('DELETE FROM Askare WHERE atunnus = :atunnus');
+        $query->execute(array('atunnus' => $this->atunnus));
+    }
+
 }
+
+
