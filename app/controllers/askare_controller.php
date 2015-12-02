@@ -27,7 +27,9 @@
 			self::check_logged_in();
 			$params = $_POST;
 
-			$luokat = $params['luokat'];
+			if (!empty($params['luokat'])){
+				$luokat = $params['luokat'];
+			}
 			$attributes = array(
 				'ktunnus' => $params['ktunnus'],
 				'nimi' => $params['nimi'],
@@ -40,8 +42,10 @@
 
 			if(count($errors) == 0){
 				$askare->save();
-				foreach($luokat as $luokka){
-					$askare->saveAskareenLuokka($luokka);
+				if (!empty($params['luokat'])){
+					foreach($luokat as $luokka){
+						$askare->saveAskareenLuokka($luokka);
+					}
 				}
 				Redirect::to('/askareet');
 			}else{
